@@ -1,0 +1,29 @@
+plugins {
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE' apply false
+	id 'org.springframework.boot' version '2.2.8.RELEASE' apply false
+}
+
+subprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.springframework.boot'
+
+	group = 'com.bzb.spring.cloud'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencyManagement {
+		imports {
+			mavenBom("org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR5")
+		}
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+}
