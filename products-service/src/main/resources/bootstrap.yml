@@ -1,0 +1,6 @@
+# We enable Zookeeper service discovery
+spring:
+  cloud:
+    zookeeper:
+      discovery:
+        enabled: true
