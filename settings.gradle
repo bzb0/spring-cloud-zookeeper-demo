@@ -1,3 +1,4 @@
 rootProject.name = 'spring-cloud-zookeeper-demo'
 
 include 'products-service'
+include 'sales-service'
