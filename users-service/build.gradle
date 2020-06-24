@@ -1,0 +1,10 @@
+plugins {
+    id "io.freefair.lombok" version "4.1.6"
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery'
+}
+
+generateLombokConfig.enabled = false
