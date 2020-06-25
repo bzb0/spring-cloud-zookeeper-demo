@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  zookeeper:
+    image: "zookeeper:3.5.7"
+    restart: "always"
+    container_name: "zookeeper"
+    ports:
+      - "2181:2181"
+  users-service:
+    image: bzb0/spring-zookeeper-demo-users-service:0.0.1-SNAPSHOT
+    build:
+      context: ./users-service
+      args:
+        - APP_DIR=build/libs
+        - APP_JAR=users-service-0.0.1-SNAPSHOT.jar
+        - ZOOKEEPER_CONNECT_STR=0.0.0.0:2181
+    environment:
+      WAIT_HOSTS: "0.0.0.0:2181"
+    network_mode: "host"
+    depends_on:
+      - zookeeper
+      - sales-service
+    restart: "always"
+  sales-service:
+    image: bzb0/spring-zookeeper-demo-sales-service:0.0.1-SNAPSHOT
+    build:
+      context: ./sales-service
+      args:
+        - APP_DIR=build/libs
+        - APP_JAR=sales-service-0.0.1-SNAPSHOT.jar
+        - ZOOKEEPER_CONNECT_STR=0.0.0.0:2181
+    environment:
+      WAIT_HOSTS: "0.0.0.0:2181"
+    network_mode: "host"
+    depends_on:
+      - zookeeper
+      - products-service
+    restart: "always"
+  products-service:
+    image: bzb0/spring-zookeeper-demo-products-service:0.0.1-SNAPSHOT
+    build:
+      context: ./products-service
+      args:
+        - APP_DIR=build/libs
+        - APP_JAR=products-service-0.0.1-SNAPSHOT.jar
+        - ZOOKEEPER_CONNECT_STR=0.0.0.0:2181
+    environment:
+      WAIT_HOSTS: "0.0.0.0:2181"
+    network_mode: "host"
+    depends_on:
+      - zookeeper
+    restart: "always"
